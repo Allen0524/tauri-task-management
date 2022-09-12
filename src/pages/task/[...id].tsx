@@ -2,7 +2,12 @@ import {useRef, useState} from "react"
 import {motion} from "framer-motion"
 import Link from "next/link"
 import {useRouter} from "next/router"
-import {SvgArrowLeft, SvgCheckCircel, SvgSpinner} from "../../assets/svg"
+import {
+	SvgArrowLeft,
+	SvgCheckCircel,
+	SvgSpinner,
+	SvgDelete,
+} from "../../assets/svg"
 import {Input, Textarea} from "../../components"
 import {useGetTaskQuery, useUpdateTaskMutation} from "../../services/taskApi"
 
@@ -80,7 +85,14 @@ function Content({
 	}
 
 	return (
-		<div className=" h-full p-9">
+		<div className="flex h-full flex-col p-9">
+			<div className=" self-end">
+				<SvgDelete
+					onClick={() => {
+						console.log("eee")
+					}}
+				/>
+			</div>
 			<div className="flex items-center">
 				<Input type="text" value={titleState} onChange={updateTitle} />
 				<StatusIcon isUpdating={isUpdating} />
