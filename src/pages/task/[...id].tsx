@@ -1,7 +1,7 @@
 import {useRef, useState} from "react"
 import {motion} from "framer-motion"
 import Link from "next/link"
-import {useRouter} from "next/router"
+import Router, {useRouter} from "next/router"
 import {
 	SvgArrowLeft,
 	SvgCheckCircel,
@@ -9,7 +9,11 @@ import {
 	SvgDelete,
 } from "../../assets/svg"
 import {Input, Textarea} from "../../components"
-import {useGetTaskQuery, useUpdateTaskMutation} from "../../services/taskApi"
+import {
+	useDeleteTaskMutation,
+	useGetTaskQuery,
+	useUpdateTaskMutation,
+} from "../../services/taskApi"
 
 function Task() {
 	const router = useRouter()
@@ -56,6 +60,7 @@ function Content({
 		title: null,
 		description: null,
 	})
+	const [deleteTask] = useDeleteTaskMutation()
 
 	const [updateTask, {isLoading: isUpdating, isSuccess}] =
 		useUpdateTaskMutation()
@@ -84,14 +89,15 @@ function Content({
 		}, 1000)
 	}
 
+	const handleDeleteTask = async () => {
+		await deleteTask(id)
+		Router.push("/task")
+	}
+
 	return (
 		<div className="flex h-full flex-col p-9">
 			<div className=" self-end">
-				<SvgDelete
-					onClick={() => {
-						console.log("eee")
-					}}
-				/>
+				<SvgDelete onClick={handleDeleteTask} />
 			</div>
 			<div className="flex items-center">
 				<Input type="text" value={titleState} onChange={updateTitle} />

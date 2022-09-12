@@ -29,6 +29,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			res.json("success")
 			break
 		}
+		case "DELETE": {
+			await prisma.task.delete({
+				where: {
+					id: Number(id),
+				},
+			})
+
+			res.json("delete task success")
+			break
+		}
 		default:
 			return res.status(405).json({message: "Method not allowed"})
 	}
